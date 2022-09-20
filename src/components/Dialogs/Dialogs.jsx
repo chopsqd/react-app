@@ -1,31 +1,39 @@
 import style from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 
+const DialogItem = (props) => {
+    let path = "/dialogs/" + props.id
+
+    return (
+        <div className={style.dialog}>
+            <NavLink to={path}>{props.name}</NavLink>
+        </div>
+    )
+}
+
+const Message = (props) => {
+    return (
+        <div className={style.message}>{props.message}</div>
+    )
+}
+
 const Dialogs = (props) => {
     return (
         <div className={style.dialogPage}>
             <div className={style.dialogsItems}>
-                <div className={style.dialog + ' ' + style.active}>
-                    <NavLink to="/dialogs/1">Dima</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/2">Andrew</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/3">Sveta</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/4">Sasha</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/5">Viktor</NavLink>
-                </div>
+                <DialogItem name="Dima" id="1"/>
+                <DialogItem name="Andrew" id="2"/>
+                <DialogItem name="Sveta" id="3"/>
+                <DialogItem name="Sasha" id="4"/>
+                <DialogItem name="Viktor" id="5"/>
+                <DialogItem name="Valera" id="6"/>
             </div>
+
             <div className={style.messages}>
-                <div className={style.message}>Hi</div>
-                <div className={style.message}>Hello</div>
-                <div className={style.message}>How are you?</div>
-                <div className={style.message}>Good!</div>
+                <Message message={"Hi!"}/>
+                <Message message={"Hello"}/>
+                <Message message={"How are you?"}/>
+                <Message message={"Good!"}/>
             </div>
         </div>)
 }

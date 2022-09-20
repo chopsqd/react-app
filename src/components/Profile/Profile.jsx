@@ -1,16 +1,14 @@
 import style from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = () => {
-    return <div>
+    return (
         <div>
-            <img src="https://wallpapersmug.com/download/1280x1024/cdb250/stars-galaxy-nebula-interstellar-milky-way.jpg" />
+            <ProfileInfo />
+            <MyPosts/>
         </div>
-        <div>
-            ava + desc
-        </div>
-        <MyPosts />
-    </div>
+    )
 }
 
 export default Profile;
