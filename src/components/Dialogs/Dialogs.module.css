@@ -1,6 +1,7 @@
 .dialogPage {
     display: grid;
     grid-template-columns: 2fr 10fr;
+    color: #fff;
 }
 
 .dialogsItems {
@@ -11,10 +12,20 @@
     color: gold
 }
 
+.dialog a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.dialog a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .messages {
     padding: 10px;
 }
 
 .message {
-
+    color: #fff
 }
