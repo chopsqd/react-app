@@ -3,11 +3,7 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 
 let initialState = {
-    users: [
-        // {id: 1, followed: false, fullName: 'Dmitry', status: 'Im boss', location: {city: 'Minsk', country: 'Belarus'}},
-        // {id: 2, followed: true, fullName: 'Alex', status: 'ebal ya vas v rot', location: {city: 'Moskow', country: 'Russia'}},
-        // {id: 3, followed: false, fullName: 'Misha', status: 'Senior WebDev', location: {city: 'Donetsk', country: 'Russia'}},
-    ]
+    users: [ ]
 }
 
 const profileReducer = (state = initialState, action) => {
