@@ -1,12 +1,12 @@
 import style from './Users.module.css'
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleIsFetchingAC,
-    unfollowAC
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleIsFetching,
+    unfollow
 } from "../../redux/users-reducer";
 import React from "react";
 import * as axios from "axios";
@@ -60,12 +60,14 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    //follow: (userId) => dispatch(followAC(userId))
-    follow: followAC,
-    //unfollow: (userId) => dispatch(unfollowAC(userId)) и так с остальными vvv
-    unfollow: unfollowAC,
-    setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    setTotalUsersCount: setTotalUsersCountAC,
-    toggleIsFetching: toggleIsFetchingAC
+    //follow: (userId) => {
+    //  dispatch(followAC(userId))
+    //}
+    follow,
+    //unfollow: (userId) => dispatch(unfollowAC(userId))
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching
 })(UsersContainer)
