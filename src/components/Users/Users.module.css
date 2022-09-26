@@ -1,3 +1,14 @@
+.usersItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.userInfo {
+    width: 50%;
+}
+
 .selectedPage {
     font-weight: bold;
 }
