@@ -7,6 +7,7 @@ import {
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {Navigate} from "react-router-dom";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -19,6 +20,7 @@ class UsersContainer extends React.Component {
     }
 
     render() {
+        if(!this.props.isAuth) return <Navigate to="/login"/>
         return <>
             {this.props.isFetching ? <Preloader /> : null}
             <Users
@@ -41,7 +43,8 @@ const mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
+        isAuth: state.auth.isAuth
     }
 }
 
