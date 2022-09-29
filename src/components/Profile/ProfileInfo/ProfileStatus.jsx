@@ -3,14 +3,30 @@ import React from 'react'
 
 class ProfileStatus extends React.Component {
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
 
-    toggleActivateEditMode() {
+    toggleActivateEditMode = () => {
         this.setState({
             editMode: !this.state.editMode
         })
         this.state.editMode = !this.state.editMode
+        this.props.updateProfileStatus(this.state.status)
+    }
+
+    onStatusChange = (event) => {
+        this.setState({
+            status: event.currentTarget.value
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
@@ -19,10 +35,10 @@ class ProfileStatus extends React.Component {
                 {
                     this.state.editMode
                     ? <div>
-                            <input autoFocus={true} onBlur={ this.toggleActivateEditMode.bind(this)} value={this.props.status}></input>
+                            <input onChange={this.onStatusChange} autoFocus={true} onBlur={ this.toggleActivateEditMode} value={this.state.status}></input>
                         </div>
                     : <div>
-                            <span onDoubleClick={this.toggleActivateEditMode.bind(this)}>{this.props.status}</span>
+                            <span onDoubleClick={this.toggleActivateEditMode}>{this.props.status || "No status yet"}</span>
                         </div>
                 }
             </div>
