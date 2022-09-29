@@ -1,19 +1,21 @@
 import style from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus"
 
 const ProfileInfo = (props) => {
     if(!props.profile) {
         return <Preloader />
     }
     return (
-        <div>
-            <div>
+        <div className={style.profileInfo}>
+            <div className={style.headerImageWrapper}>
                 <img
                     src="https://wallpapersmug.com/download/1280x1024/cdb250/stars-galaxy-nebula-interstellar-milky-way.jpg"/>
             </div>
-            <div className={style.descriptionBlock}>
+            <div>
                 <img src={props.profile.photos.large}/>
                 <div>{props.profile.fullName}</div>
+                <ProfileStatus status={"Hello my friends"}/>
             </div>
         </div>
     )
