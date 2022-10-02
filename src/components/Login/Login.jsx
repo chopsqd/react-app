@@ -5,7 +5,6 @@ import {required} from "../../utils/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import { Navigate } from "react-router-dom";
-import {mapStateToPropsFactory} from "react-redux/es/connect/mapStateToProps";
 
 const Input = FormElement("input")
 const LoginForm = (props) => {
@@ -19,6 +18,11 @@ const LoginForm = (props) => {
         <div>
             <Field component={"input"} name={"rememberMe"} type={"checkbox"}/>Remember me
         </div>
+        {
+            props.error
+            ? <div className={style.summaryError}>{props.error}</div>
+            : null
+        }
         <div>
             <button>Login</button>
         </div>
