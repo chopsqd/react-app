@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import SocialApp from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders without crashing', () => {
+  render(<SocialApp />);
+  const main = screen.getByRole(/main/i)
+  expect(main).toBeInTheDocument();
 });
