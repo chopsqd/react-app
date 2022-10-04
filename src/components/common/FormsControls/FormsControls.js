@@ -1,4 +1,4 @@
-import style from './formControlls.module.css'
+import style from './FormControlls.module.css'
 
 export const FormElement = Element => ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error
@@ -11,3 +11,4 @@ export const FormElement = Element => ({input, meta, ...props}) => {
         </div>
     )
 }
+

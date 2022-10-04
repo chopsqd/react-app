@@ -1,7 +1,7 @@
 import './App.css';
 import {Component} from 'react'
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
+import {Routes, Route, useParams} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -12,10 +12,10 @@ import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
-function withRouter(Children){
-    return(props)=>{
-        const match  = {params: useParams()};
-        return <Children {...props}  match = {match}/>
+function withRouter(Children) {
+    return (props) => {
+        const match = {params: useParams()};
+        return <Children {...props} match={match}/>
     }
 }
 
@@ -25,33 +25,31 @@ class App extends Component {
     }
 
     render() {
-        if(!this.props.initialized) {
-            return <Preloader />
+        if (!this.props.initialized) {
+            return <Preloader/>
         }
 
         return (
-            <BrowserRouter>
-                <div className='app-wrapper'>
-                    <HeaderContainer/>
-                    <Navbar/>
-                    <div className='app-content'>
-                        <Routes>
-                            <Route
-                                path='/dialogs/*'
-                                element={<DialogsContainer />}/>
-                            <Route path="/profile" element={<ProfileContainer />}>
-                                <Route path=":userId" element={<ProfileContainer />} />
-                            </Route>
-                            <Route
-                                path='/users'
-                                element={<UsersContainer />}/>
-                            <Route
-                                path='/login'
-                                element={<Login />}/>
-                        </Routes>
-                    </div>
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <Navbar/>
+                <div className='app-content'>
+                    <Routes>
+                        <Route
+                            path='/dialogs/*'
+                            element={<DialogsContainer/>}/>
+                        <Route path="/profile" element={<ProfileContainer/>}>
+                            <Route path=":userId" element={<ProfileContainer/>}/>
+                        </Route>
+                        <Route
+                            path='/users'
+                            element={<UsersContainer/>}/>
+                        <Route
+                            path='/login'
+                            element={<Login/>}/>
+                    </Routes>
                 </div>
-            </BrowserRouter>
+            </div>
         )
     }
 }

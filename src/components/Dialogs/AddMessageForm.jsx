@@ -1,5 +1,5 @@
 import {Field, reduxForm} from "redux-form";
-import {FormElement} from "../common/FormsControls/formsControls";
+import {FormElement} from "../common/FormsControls/FormsControls";
 import {required, maxLengthCreator} from "../../utils/validators";
 
 const Textarea = FormElement("textarea")
