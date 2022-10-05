@@ -1,17 +1,18 @@
 import './App.css';
-import {Component} from 'react'
+import React, {Component} from 'react'
 import Navbar from './components/Navbar/Navbar';
 import {Routes, Route, useParams, BrowserRouter} from "react-router-dom";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const Login = React.lazy(() => import('./components/Login/Login'));
 
 function withRouter(Children) {
     return (props) => {
@@ -26,7 +27,7 @@ class App extends Component {
     }
 
     render() {
-        if(!this.props.initialized) {
+        if (!this.props.initialized) {
             return <Preloader/>
         }
 
@@ -35,20 +36,22 @@ class App extends Component {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-content'>
-                    <Routes>
-                        <Route
-                            path='/dialogs/*'
-                            element={<DialogsContainer/>}/>
-                        <Route path="/profile" element={<ProfileContainer/>}>
-                            <Route path=":userId" element={<ProfileContainer/>}/>
-                        </Route>
-                        <Route
-                            path='/users'
-                            element={<UsersContainer/>}/>
-                        <Route
-                            path='/login'
-                            element={<Login/>}/>
-                    </Routes>
+                    <React.Suspense fallback={<div><Preloader/></div>}>
+                        <Routes>
+                            <Route
+                                path='/dialogs/*'
+                                element={<DialogsContainer/>}/>
+                            <Route path="/profile" element={<ProfileContainer/>}>
+                                <Route path=":userId" element={<ProfileContainer/>}/>
+                            </Route>
+                            <Route
+                                path='/users'
+                                element={<UsersContainer/>}/>
+                            <Route
+                                path='/login'
+                                element={<Login/>}/>
+                        </Routes>
+                    </React.Suspense>
                 </div>
             </div>
         )
@@ -66,7 +69,7 @@ let AppContainer = compose(
 const SocialApp = (props) => {
     return <BrowserRouter>
         <Provider store={store}>
-            <AppContainer />
+            <AppContainer/>
         </Provider>
     </BrowserRouter>
 }
