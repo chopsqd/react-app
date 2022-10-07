@@ -2,8 +2,13 @@ import style from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import userPhoto from '../../../assets/images/userPhoto.png'
+import {useState} from "react";
+import ProfileDataFormReduxForm from "./ProfileDataForm";
 
 const ProfileInfo = (props) => {
+
+    let [editMode, setEditMode] = useState(false)
+
     if (!props.profile) {
         return <Preloader/>
     }
@@ -12,6 +17,12 @@ const ProfileInfo = (props) => {
         if (e.target.files.length) {
             props.savePhoto(e.target.files[0])
         }
+    }
+
+    const onSubmit = (formData) => {
+        props.saveProfile(formData).then(() => {
+            setEditMode(false)
+        })
     }
 
     return (
@@ -23,10 +34,11 @@ const ProfileInfo = (props) => {
             <div>
                 <img src={props.profile.photos.large || userPhoto}/>
                 {props.isOwner ? <input type={"file"} onChange={onProfilePhotoSelected}/> : null}
-                <div>{props.profile.fullName}</div>
                 <ProfileStatus status={props.status} updateProfileStatus={props.updateProfileStatus}/>
 
-                <ProfileData profile={props.profile}/>
+                {editMode
+                    ? <ProfileDataFormReduxForm initialValues={props.profile}  profile={props.profile} onSubmit={onSubmit}/>
+                    : <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={() => {setEditMode(true)}}/>}
             </div>
         </div>
     )
@@ -34,6 +46,8 @@ const ProfileInfo = (props) => {
 
 const ProfileData = (props) => {
     return <div>
+        {props.isOwner && <div><button onClick={props.goToEditMode}>Edit</button></div>}
+        <div><b>{props.profile.fullName}</b></div>
         <div>
             <div>Looking for a job: {props.profile.lookingForAJob ? "Yes" : "No"}</div>
             {props.profile.lookingForAJob &&
@@ -47,7 +61,7 @@ const ProfileData = (props) => {
     </div>
 }
 
-const Contact = ({contactTitle, contactValue}) => {
+export const Contact = ({contactTitle, contactValue}) => {
     return <div>{contactTitle}: {contactValue}</div>
 }
 
