@@ -1,7 +1,7 @@
 import './App.css';
 import React, {Component} from 'react'
 import Navbar from './components/Navbar/Navbar';
-import {Routes, Route, useParams, BrowserRouter} from "react-router-dom";
+import {Routes, Route, useParams, BrowserRouter, Navigate} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
@@ -38,6 +38,7 @@ class App extends Component {
                 <div className='app-content'>
                     <React.Suspense fallback={<div><Preloader/></div>}>
                         <Routes>
+                            <Route path="/" element={<Navigate to="/profile" />} />
                             <Route
                                 path='/dialogs/*'
                                 element={<DialogsContainer/>}/>
