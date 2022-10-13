@@ -1,8 +1,21 @@
+import React from 'react'
 import style from './Users.module.css'
 import User from "./User";
+import {UserType} from "../../types/types";
 
-const Users = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+type PropsType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    users: Array<UserType>
+    followingInProgress: Array<number>
+    unfollow: (userId: number) => void
+    follow: (userId: number) => void
+    onPageChanged: (page: number) => void
+}
+
+const Users: React.FC<PropsType> = (props) => {
+    let pagesCount: number = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -25,7 +38,6 @@ const Users = (props) => {
 
             {props.users.map(user =>
                 <User
-                    className={style.usersItem}
                     key={user.id}
                     user={user}
                     followingInProgress={props.followingInProgress}
