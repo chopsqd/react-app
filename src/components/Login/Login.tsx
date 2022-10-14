@@ -1,13 +1,19 @@
 import style from './Login.module.css'
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {FormElement} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import { Navigate } from "react-router-dom";
+import {AppStateType} from "../../redux/redux-store";
+import React from "react";
+
+type LoginFormOwnProps = {
+    captchaUrl: string | null
+}
 
 const Input = FormElement("input")
-const LoginForm = ({handleSubmit, error, captchaUrl}) => {
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & LoginFormOwnProps> = ({handleSubmit, error, captchaUrl}) => {
     return <form onSubmit={handleSubmit}>
         <div>
             <Field placeholder={"Email"} name={"email"} component={Input} validate={[required]}/>
@@ -33,10 +39,27 @@ const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     </form>
 }
 
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
+const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({form: 'login'})(LoginForm)
 
-const Login = (props) => {
-    const onSubmit = (formData) => {
+type MapStatePropsType = {
+    captchaUrl: string | null
+    isAuth: boolean
+}
+
+type MapDispatchPropsType = {
+    login: (email: string, password: string, rememberMe: boolean, captcha: any) => void
+}
+
+type LoginFormValuesType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: any
+
+}
+
+const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
+    const onSubmit = (formData: LoginFormValuesType) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
@@ -50,7 +73,7 @@ const Login = (props) => {
     </div>
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     captchaUrl: state.auth.captchaUrl,
     isAuth: state.auth.isAuth
 })
