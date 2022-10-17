@@ -24,7 +24,7 @@ export const actions = {
     initializedSuccess: () => ({type: 'INITIALIZED_SUCCESS'} as const)
 }
 
-const initializeApp = () => async (dispatch: any) => {
+export const initializeApp = () => async (dispatch: any) => {
     await dispatch(getAuthUserData())
     dispatch(actions.initializedSuccess())
 }
