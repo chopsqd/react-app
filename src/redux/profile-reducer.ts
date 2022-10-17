@@ -90,40 +90,40 @@ type SetProfileStatusActionType = {
 export const setProfileStatus = (status: string): SetProfileStatusActionType => ({type: SET_PROFILE_STATUS, status})
 
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
-    let response = await API.getProfile(userId);
-    dispatch(setUserProfile(response.data))
+    let data = await API.getProfile(userId);
+    dispatch(setUserProfile(data))
 }
 
 export const getProfileStatus = (userId: number) => async (dispatch: any) => {
-    let response = await API.getProfileStatus(userId);
-    dispatch(setProfileStatus(response.data))
+    let data = await API.getProfileStatus(userId);
+    dispatch(setProfileStatus(data))
 }
 
 export const updateProfileStatus = (status: string) => async (dispatch: any) => {
-    let response = await API.updateProfileStatus(status);
+    let data = await API.updateProfileStatus(status);
 
-    if (response.data.resultCode === 0) {
+    if (data.resultCode === 0) {
         dispatch(setProfileStatus(status))
     }
 }
 
 export const savePhoto = (file: any) => async (dispatch: any) => {
-    let response = await API.savePhoto(file);
+    let data = await API.savePhoto(file);
 
-    if (response.data.resultCode === 0) {
-        dispatch(savePhotoSuccess(response.data.data.photos))
+    if (data.resultCode === 0) {
+        dispatch(savePhotoSuccess(data.data.photos))
     }
 }
 
 export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
     const userId = getState().auth.id
-    const response = await API.saveProfile(profile);
+    const data = await API.saveProfile(profile);
 
-    if (response.data.resultCode === 0) {
+    if (data.resultCode === 0) {
         dispatch(getUserProfile(userId))
     } else {
-        dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}))
-        return Promise.reject(response.data.messages[0])
+        dispatch(stopSubmit("edit-profile", {_error: data.messages[0]}))
+        return Promise.reject(data.messages[0])
     }
 }
 
