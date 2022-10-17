@@ -1,7 +1,7 @@
 import {API} from "../api/api";
 import {updateObjectInArray} from "../utils/objects-helpers";
 import {UserType} from "../types/types";
-import {AppStateType, InferActionsTypes} from "./redux-store";
+import {AppStateType, BaseThunkType, InferActionsTypes} from "./redux-store";
 import {Dispatch} from "react";
 import {ThunkAction} from "redux-thunk";
 
@@ -94,7 +94,7 @@ export const actions = {
 
 export const setCurrentPage = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage})
 
-type ThunkType = ThunkAction<Promise<void>, AppStateType, any, ActionsTypes>
+type ThunkType = BaseThunkType<ActionsTypes>
 
 export const requestUsers = (currentPage: number, pageSize: number): ThunkType => {
     return async (dispatch) => {
