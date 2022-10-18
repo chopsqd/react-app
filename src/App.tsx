@@ -7,21 +7,26 @@ import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import store from "./redux/redux-store";
+import store, {AppStateType} from "./redux/redux-store";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 const Login = React.lazy(() => import('./components/Login/Login'));
 
-function withRouter(Children) {
-    return (props) => {
+function withRouter(Children: any) {
+    return (props: any) => {
         const match = {params: useParams()};
         return <Children {...props} match={match}/>
     }
 }
 
-class App extends Component {
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+    initializeApp: () => void
+}
+
+class App extends Component<MapPropsType & DispatchPropsType> {
     componentDidMount() {
         this.props.initializeApp()
     }
@@ -59,15 +64,15 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized
 })
 
-let AppContainer = compose(
+let AppContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp}))(App);
 
-const SocialApp = (props) => {
+const SocialApp: React.FC = () => {
     return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
