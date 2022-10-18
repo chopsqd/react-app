@@ -55,7 +55,6 @@ type LoginFormValuesType = {
     password: string,
     rememberMe: boolean,
     captcha: any
-
 }
 
 const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {

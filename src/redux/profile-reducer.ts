@@ -3,12 +3,6 @@ import {stopSubmit} from "redux-form";
 import {PostType, PhotosType, ProfileType} from "../types/types";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
 
-const ADD_POST = 'ADD-POST'
-const DELETE_POST = 'DELETE_POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
-const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
-
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
@@ -25,7 +19,7 @@ type ThunkType = BaseThunkType<ActionsType | ReturnType<typeof stopSubmit>>
 
 const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case ADD_POST: {
+        case 'ADD-POST': {
             let newPost = {
                 id: 5,
                 message: action.newPostText,
@@ -37,22 +31,22 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 newPostText: ''
             }
         }
-        case DELETE_POST:
+        case 'DELETE_POST':
             return {
                 ...state,
                 posts: state.posts.filter(post => post.id !== action.postId)
             }
-        case SET_USER_PROFILE:
+        case 'SET_USER_PROFILE':
             return {
                 ...state,
                 profile: action.profile
             }
-        case SET_PROFILE_STATUS:
+        case 'SET_PROFILE_STATUS':
             return {
                 ...state,
                 status: action.status
             }
-        case SAVE_PHOTO_SUCCESS:
+        case 'SAVE_PHOTO_SUCCESS':
             return {
                 ...state,
                 profile: {...state.profile, photos: action.photos} as ProfileType
@@ -63,11 +57,11 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
 }
 
 export const actions = {
-    addPostActionCreator: (newPostText: string) => ({type: ADD_POST, newPostText} as const),
-    deletePost: (postId: number) => ({type: DELETE_POST, postId} as const),
-    savePhotoSuccess: (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, photos} as const),
-    setUserProfile: (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const),
-    setProfileStatus: (status: string) => ({type: SET_PROFILE_STATUS, status} as const)
+    addPostActionCreator: (newPostText: string) => ({type: 'ADD-POST', newPostText} as const),
+    deletePost: (postId: number) => ({type: 'DELETE_POST', postId} as const),
+    savePhotoSuccess: (photos: PhotosType) => ({type: 'SAVE_PHOTO_SUCCESS', photos} as const),
+    setUserProfile: (profile: ProfileType) => ({type: 'SET_USER_PROFILE', profile} as const),
+    setProfileStatus: (status: string) => ({type: 'SET_PROFILE_STATUS', status} as const)
 }
 
 export const getUserProfile = (userId: number): ThunkType => async (dispatch) => {
