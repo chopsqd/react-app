@@ -9,8 +9,7 @@ let initialState = {
         {id: 2, message: 'Its my first post 83.9', likesCount: 11},
     ] as Array<PostType>,
     profile: null as ProfileType | null,
-    status: '',
-    newPostText: ''
+    status: ''
 }
 
 export type InitialStateType = typeof initialState
@@ -27,8 +26,7 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
+                posts: [...state.posts, newPost]
             }
         }
         case 'DELETE_POST':
