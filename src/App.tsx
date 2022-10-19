@@ -9,9 +9,9 @@ import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store, {AppStateType} from "./redux/redux-store";
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer') as any);
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer') as any);
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer') as any);
 const Login = React.lazy(() => import('./components/Login/Login'));
 
 function withRouter(Children: any) {
