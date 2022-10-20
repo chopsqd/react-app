@@ -33,7 +33,7 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    requestUsers: (currentPage: number, pageSize: number, term: string) => void
+    requestUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
     setCurrentPage: (pageNumber: number) => void
 }
 
@@ -45,16 +45,16 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize, "")
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize, this.props.filter)
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
-        this.props.requestUsers(pageNumber, this.props.pageSize, this.props.filter.term)
+        this.props.requestUsers(pageNumber, this.props.pageSize, this.props.filter)
     }
 
     onFilterChanged = (filter: FilterType) => {
-        this.props.requestUsers(1, this.props.pageSize, filter.term)
+        this.props.requestUsers(1, this.props.pageSize, filter)
     }
 
     render() {
@@ -92,5 +92,10 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export default compose(
     withAuthRedirect,
     //<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
-    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps,{follow, unfollow, requestUsers, setCurrentPage})
+    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+        follow,
+        unfollow,
+        requestUsers,
+        setCurrentPage
+    })
 )(UsersContainer)
