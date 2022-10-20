@@ -53,8 +53,8 @@ type GetCaptchaUrlResponseType ={
 
 export const API = {
     // Users
-    getUsers(currentPage = 1, pageSize = 5) {
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
+    getUsers(currentPage = 1, pageSize = 5, term: string = '') {
+        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`).then(response => response.data)
     },
     follow(userId: number) {
         return instance.post<ResponseType>(`follow/${userId}`).then(res => res.data)
