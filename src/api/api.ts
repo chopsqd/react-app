@@ -16,7 +16,7 @@ export enum ResultCodesEnum {
 }
 
 // Generic type
-type ResponseType<D = {}, RC = ResultCodesEnum> = {
+export type ResponseType<D = {}, RC = ResultCodesEnum> = {
     data: D
     resultCode: RC
     messages: Array<string>

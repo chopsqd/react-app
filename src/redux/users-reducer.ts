@@ -1,4 +1,4 @@
-import {API} from "../api/api";
+import {API, ResponseType} from "../api/api";
 import {updateObjectInArray} from "../utils/objects-helpers";
 import {UserType} from "../types/types";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
@@ -13,7 +13,7 @@ let initialState = {
     followingInProgress: [] as Array<number> // Array of users ids
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 const usersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
@@ -108,12 +108,12 @@ export const requestUsers = (currentPage: number, pageSize: number): ThunkType =
 
 const _followUnfollowFlow = async (dispatch: Dispatch<ActionsTypes>,
                                    userId: number,
-                                   apiMethod: any,
+                                   apiMethod: (userId: number) => Promise<ResponseType>,
                                    actionCreator: (userId: number) => ActionsTypes) => {
     dispatch(actions.toggleFollowingInProgress(true, userId))
     let response = await apiMethod(userId);
 
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(actionCreator(userId))
     }
     dispatch(actions.toggleFollowingInProgress(false, userId))
