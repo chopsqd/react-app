@@ -13,6 +13,7 @@ import {
     getUsersFilter
 } from "../../redux/users-selectors";
 import {AnyAction} from "redux";
+import {createSearchParams, useLocation, useNavigate} from "react-router-dom";
 
 type PropsType = {}
 
@@ -26,10 +27,55 @@ export const Users: React.FC<PropsType> = (props) => {
     const followingInProgress = useSelector(getFollowingInProgress)
 
     const dispatch = useDispatch()
+    const location = useLocation();
+
+    const useNavigateSearch = () => {
+        const navigate = useNavigate();
+        return (pathname: any, params: any) =>
+            navigate(`${pathname}?${createSearchParams(params)}`);
+    };
+
+    const navigateSearch = useNavigateSearch();
+    useEffect(() => {
+        const query: any = {}
+
+        if(filter.term) query.term = filter.term
+        if(filter.friend) query.friend = filter.friend
+        if(currentPage !== 1) query.page = String(currentPage)
+
+        navigateSearch("/users", query);
+
+    }, [filter, currentPage]);
 
     useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter)as unknown as AnyAction)
-    }, [])
+        const query = new URLSearchParams(location.search)
+
+        let actualPage = currentPage;
+        let actualFilter = filter;
+
+        const queryFriend: string | null = query.get("friend");
+        const queryPage: string | null = query.get("page");
+        const queryTerm: string | null = query.get("term");
+
+        if(queryPage) actualPage = Number(queryPage);
+        if(queryTerm) actualFilter = { ...actualFilter, term: queryTerm as string};
+
+        switch (queryFriend) {
+            case "null":
+                actualFilter = { ...actualFilter, friend: null };
+                break;
+            case "true":
+                actualFilter = { ...actualFilter, friend: true };
+                break;
+            case "false":
+                actualFilter = { ...actualFilter, friend: false };
+                break;
+            default:
+                break;
+        }
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter)as unknown as AnyAction)
+    }, [location.search])
 
     const setCurrentPageNumber = (pageNumber: number) => {
         dispatch(setCurrentPage(pageNumber)as unknown as AnyAction)
