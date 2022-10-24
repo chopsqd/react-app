@@ -1,6 +1,13 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
+const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
 
+export type ChatMessageType = {
+    message: string
+    photo: string
+    userId: number
+    userName: string
+}
 
 const ChatPage: React.FC = () => {
     return <div>
@@ -9,9 +16,6 @@ const ChatPage: React.FC = () => {
 }
 
 const Chat: React.FC = () => {
-
-
-
     return <div>
         <Messages/>
         <AddChatMessage/>
@@ -19,25 +23,27 @@ const Chat: React.FC = () => {
 }
 
 const Messages: React.FC = () => {
-    const messages = [1, 2, 3, 4]
+
+    const [messages, setMessages] = useState<ChatMessageType[]>([])
+
+    useEffect(() => {
+        ws.addEventListener('message', (event: MessageEvent) => {
+            let newMessages = JSON.parse(event.data);
+            setMessages((prevMessages) => [...prevMessages, ...newMessages])
+        })
+    }, [])
 
     return <div style={{height: '400px', overflowY: 'auto'}}>
-        {messages.map((m: any) => <Message/>)}
+        {messages.map((m, index) => <Message key={index} message={m}/>)}
     </div>
 }
 
-const Message: React.FC = () => {
-    const message = {
-        url: "https://cs13.pikabu.ru/avatars/1873/x1873132-1972677953.png",
-        author: 'Misha',
-        text: 'Hello Bro!'
-    }
-
+const Message: React.FC<{message: ChatMessageType}> = ({message}) => {
     return <div>
-        <img src={message.url} style={{"width": "50px"}}/>
-        <b>{message.author}</b>
+        <img src={message.photo} style={{"width": "50px"}}/>
+        <b>{message.userName}</b>
         <br/>
-        {message.text}
+        {message.message}
         <hr/>
     </div>
 }
