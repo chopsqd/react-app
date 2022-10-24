@@ -1,7 +1,7 @@
 import './App.css';
 import React, {Component} from 'react'
 import Navbar from './components/Navbar/Navbar';
-import {Routes, Route, useParams, BrowserRouter, Navigate} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useParams} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
@@ -10,9 +10,9 @@ import Preloader from "./components/common/Preloader/Preloader";
 import store, {AppStateType} from "./redux/redux-store";
 import {UsersPage} from "./components/Users/UsersPage";
 import {LoginPage} from "./components/Login/LoginPage";
-
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer') as any);
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer') as any);
+const ChatPage = React.lazy(() => import("./pages/chat/ChatPage") as any);
 
 function withRouter(Children: any) {
     return (props: any) => {
@@ -56,6 +56,10 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                             <Route
                                 path='/login'
                                 element={<LoginPage/>}/>
+
+                            <Route
+                                path='/chat'
+                                element={<ChatPage/>}/>
                         </Routes>
                     </React.Suspense>
                 </div>

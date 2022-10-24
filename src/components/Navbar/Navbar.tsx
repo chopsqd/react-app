@@ -1,5 +1,6 @@
 import style from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
+import React from "react";
 
 const Navbar: React.FC = () => {
     return (
@@ -14,7 +15,7 @@ const Navbar: React.FC = () => {
                 <NavLink to='/users' className = { navData => navData.isActive ? style.active : style.item }>Users</NavLink>
             </div>
             <div>
-                <NavLink to='/dialogs' className = { navData => navData.isActive ? style.active : style.item }>News</NavLink>
+                <NavLink to='/chat' className = { navData => navData.isActive ? style.active : style.item }>Chat</NavLink>
             </div>
             <div>
                 <NavLink to='/dialogs' className = { navData => navData.isActive ? style.active : style.item }>Music</NavLink>

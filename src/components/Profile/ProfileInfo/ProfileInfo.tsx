@@ -38,10 +38,6 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
     return (
         <div className={style.profileInfo}>
-            <div className={style.headerImageWrapper}>
-                <img
-                    src="https://wallpapersmug.com/download/1280x1024/cdb250/stars-galaxy-nebula-interstellar-milky-way.jpg"/>
-            </div>
             <div>
                 <img src={props.profile.photos.large || userPhoto}/>
                 {props.isOwner ? <input type={"file"} onChange={onProfilePhotoSelected}/> : null}

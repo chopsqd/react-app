@@ -27,7 +27,7 @@ export const Users: React.FC<PropsType> = (props) => {
     const followingInProgress = useSelector(getFollowingInProgress)
 
     const dispatch = useDispatch()
-    const location = useLocation();
+    const location = useLocation()
 
     const useNavigateSearch = () => {
         const navigate = useNavigate();
